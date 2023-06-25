@@ -27,7 +27,7 @@ export default function App() {
         console.log("Please grant location permissions");
         return;
       }
-
+      
       let currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
       console.log("Location:");
@@ -35,6 +35,12 @@ export default function App() {
       setPin({
         latitude: currentLocation.coords.latitude,
         longitude: currentLocation.coords.longitude
+      });
+      setRegion({
+        latitude: currentLocation.coords.latitude,
+        longitude: currentLocation.coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
       });
     };
     getPermissions();
@@ -63,7 +69,7 @@ export default function App() {
       <View style={styles.screen}>
         <MapView
           style={styles.map}
-          initialRegion={region}
+          region={region}
         >
           <Marker
             coordinate={pin}
@@ -118,16 +124,5 @@ export default function App() {
       </Tab.Navigator>
     </NavigationContainer>
      );
-    }
-    
-    const styles = StyleSheet.create({
-      screen: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-      map: {
-        width: '100%',
-        height: '100%',
-      },
-    });
+      
+}
