@@ -89,7 +89,7 @@ export default function App() {
     );
   }
 
-  function InboxScreen() {
+  function ProfileScreen() {
     return (
       <View style={styles.screen}>
         <Text>Inbox Screen</Text>
@@ -111,9 +111,9 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Friends" component={FriendsScreen} />
-        <Tab.Screen name="Feed" component={FeedScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
         <Tab.Screen name="Map" component={MapScreen} />
-        <Tab.Screen name="Inbox" component={InboxScreen} />
+        <Tab.Screen name="Feed" component={FeedScreen} />
         <Tab.Screen name="Clans" component={ClanScreen} />
       </Tab.Navigator>
     </NavigationContainer>
