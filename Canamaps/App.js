@@ -4,6 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import * as Location from 'expo-location';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Profile from './Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -95,15 +96,6 @@ export default function App() {
     );
   }
 
-  function ProfileScreen() {
-    return (
-      <View style={styles.screen}>
-        <Text>Inbox Screen</Text>
-        {/* Your inbox screen content goes here */}
-      </View>
-    );
-  }
-
   function ClanScreen() {
     return (
       <View style={styles.screen}>
@@ -117,7 +109,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Friends" component={FriendsScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
+        <Tab.Screen name="Profile" component={Profile} />
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Feed" component={FeedScreen} />
         <Tab.Screen name="Clans" component={ClanScreen} />
