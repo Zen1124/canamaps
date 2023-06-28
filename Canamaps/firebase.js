@@ -2,13 +2,14 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import * as firebase from 'firebase';
+import firebaseKey from "./keys.json"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDAJFX-J1lvQqzhGmG2SXClBqYYERojXvw",
+  apiKey: firebaseKey,
   authDomain: "canamaps.firebaseapp.com",
   projectId: "canamaps",
   storageBucket: "canamaps.appspot.com",
