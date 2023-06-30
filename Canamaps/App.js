@@ -5,6 +5,7 @@ import * as Location from 'expo-location';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from './Profile';
+import Friends from './Friends';
 
 
 const Tab = createBottomTabNavigator();
@@ -48,128 +49,7 @@ export default function App() {
     getPermissions();
   }, []);
 
-  function FriendsScreen() {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [activeTab, setActiveTab] = useState('suggestions');
   
-    const handleSearch = () => {
-      // Implement search functionality based on searchQuery
-      // Retrieve search results from the backend or filter existing friend list
-      // Update the UI accordingly
-    };
-  
-    const renderSuggestionsTab = () => (
-      <View style={styles.tabContent}>
-        <Text>Suggestions Screen</Text>
-        {/* Suggestions screen content */}
-      </View>
-    );
-  
-    const renderFriendsTab = () => (
-      <View style={styles.tabContent}>
-        <Text>Friends Screen</Text>
-        {/* Friends screen content */}
-      </View>
-    );
-  
-    const renderRequestsTab = () => (
-      <View style={styles.tabContent}>
-        <Text>Requests Screen</Text>
-        {/* Requests screen content */}
-      </View>
-    );
-  
-    return (
-      <View style={styles.screen}>
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search friends..."
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-          <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
-            <Text style={styles.searchButtonText}>Search</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.tabContainer}>
-          <TouchableOpacity
-            style={[styles.tab, activeTab === 'suggestions' && styles.activeTab]}
-            onPress={() => setActiveTab('suggestions')}
-          >
-            <Text>Suggestions</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tab, activeTab === 'friends' && styles.activeTab]}
-            onPress={() => setActiveTab('friends')}
-          >
-            <Text>Friends</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tab, activeTab === 'requests' && styles.activeTab]}
-            onPress={() => setActiveTab('requests')}
-          >
-            <Text>Requests</Text>
-          </TouchableOpacity>
-        </View>
-        {activeTab === 'suggestions' && renderSuggestionsTab()}
-        {activeTab === 'friends' && renderFriendsTab()}
-        {activeTab === 'requests' && renderRequestsTab()}
-      </View>
-    );
-  }
-  
-  const styles = StyleSheet.create({
-    screen: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    searchContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 16,
-      marginBottom: 16,
-    },
-    searchInput: {
-      flex: 1,
-      height: 40,
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 8,
-      paddingHorizontal: 12,
-    },
-    searchButton: {
-      marginLeft: 16,
-      padding: 8,
-      borderRadius: 8,
-      backgroundColor: 'blue',
-    },
-    searchButtonText: {
-      color: 'white',
-    },
-    tabContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      marginBottom: 16,
-    },
-    tab: {
-      paddingVertical: 8,
-      paddingHorizontal: 16,
-      borderRadius: 8,
-      borderWidth: 1,
-      borderColor: '#ccc',
-    },
-    activeTab: {
-      backgroundColor: 'blue',
-    },
-    tabContent: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
-
   function FeedScreen() {
     return (
       <View style={styles.screen}>
@@ -242,7 +122,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Friends" component={FriendsScreen} />
+        <Tab.Screen name="Friends" component={Friends} />
         <Tab.Screen name="Profile" component={Profile} />
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Feed" component={FeedScreen} />
