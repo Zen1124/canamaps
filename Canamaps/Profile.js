@@ -26,8 +26,9 @@ export default function Profile () {
                 const errorMessage = error.message;
                 console.log(errorCode);
                 if (errorCode == "auth/email-already-in-use") {
-                    console.log("used");
                     setLoginError("Email already in use. Please try again.")
+                } else if (errorCode == "auth/invalid-email") {
+                    setLoginError("Please use a valid email address")
                 }
                 console.log(errorMessage);
             });
@@ -44,6 +45,9 @@ export default function Profile () {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                if (errorCode == "auth/wrong-password" || errorCode == "auth/user-not-found") {
+                    setLoginError("Email or password is incorrect. Please try again.")
+                }
                 console.log(errorCode);
                 console.log(errorMessage);
             });
