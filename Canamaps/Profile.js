@@ -10,6 +10,7 @@ export default function Profile () {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loginError, setLoginError] = useState('')
     const auth = getAuth();
 
     const handleSignUp = () => {
@@ -24,6 +25,10 @@ export default function Profile () {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode);
+                if (errorCode == "auth/email-already-in-use") {
+                    console.log("used");
+                    setLoginError("Email already in use. Please try again.")
+                }
                 console.log(errorMessage);
             });
     }
@@ -63,6 +68,9 @@ export default function Profile () {
                     secureTextEntry
                     style ={styles.input}
                 />
+                <Text style={styles.errorMsg}>
+                {loginError}
+                </Text>
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity 
@@ -76,6 +84,7 @@ export default function Profile () {
                     <Text style={styles.buttonTextOut}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
+            
         </KeyboardAvoidingView>
 
     );
@@ -126,5 +135,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 800,
         color: 'green'
+    },
+    errorMsg: {
+        color: 'red'
     }
 });
