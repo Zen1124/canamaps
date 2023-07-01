@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import MapView, { Callout, Circle, Marker } from 'react-native-maps';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from './Profile';
 import Friends from './Friends';
-
+import Settings from './Settings';
+import { AntDesign } from '@expo/vector-icons';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [pin, setPin] = useState({
@@ -49,7 +52,6 @@ export default function App() {
     getPermissions();
   }, []);
 
-  
   function FeedScreen() {
     return (
       <View style={styles.screen}>
@@ -60,15 +62,24 @@ export default function App() {
   }
 
   function MapScreen() {
+    const navigation = useNavigation();
+
     return (
       <View style={styles.screen}>
         <MapView
           style={styles.map}
           region={region}
         >
+          <TouchableOpacity
+            style={styles.settingsButton}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <AntDesign name="setting" size={24} color="black" />
+          </TouchableOpacity>
+
           <Marker
             coordinate={pin}
-            pinColor='blue'
+            pinColor='red'
             draggable={true}
             onDragStart={(e) => {
               console.log("Drag start", e.nativeEvent.coordinate.latitude)
@@ -99,6 +110,7 @@ export default function App() {
       timesSmoked: 8
     };
   
+  
     return (
       <View style={styles.screen}>
         <Text>Username: {user.username}</Text>
@@ -124,12 +136,21 @@ export default function App() {
       <Tab.Navigator>
         <Tab.Screen name="Friends" component={Friends} />
         <Tab.Screen name="Profile" component={Profile} />
-        <Tab.Screen name="Map" component={MapScreen} />
+        <Tab.Screen name="Map" options={{ headerShown: false }}>
+          {() => (
+            <Stack.Navigator>
+              <Stack.Screen name="MapScreen" component={MapScreen} />
+              <Stack.Screen name="Settings" component={Settings} />
+            </Stack.Navigator>
+          )}
+        </Tab.Screen>
         <Tab.Screen name="Feed" component={FeedScreen} />
         <Tab.Screen name="Clans" component={ClanScreen} />
       </Tab.Navigator>
     </NavigationContainer>
-     );
+  );
+
+  
       
 }
 const styles = StyleSheet.create({
@@ -141,5 +162,12 @@ const styles = StyleSheet.create({
   map: {
     width: '100%',
     height: '100%',
+  },
+  settingsButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 10,
+    padding: 10,
   },
 });
