@@ -4,11 +4,13 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Profile from './Profile';
-import Friends from './Friends';
-import Settings from './Settings';
+import Profile from './screens/Profile';
+import Friends from './screens/Friends';
+import Settings from './screens/Settings';
+import Login from './screens/Login';
 import { AntDesign } from '@expo/vector-icons';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
+import { getAuth } from "firebase/auth";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -51,6 +53,18 @@ export default function App() {
     };
     getPermissions();
   }, []);
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+    if (user) {
+     // User is signed in
+        console.log(user.email + " is signed in")
+    // ...
+    } else {
+    // No user is signed in. Go to login
+        console.log("home - no user signed in")
+  }
 
   function FeedScreen() {
     return (
@@ -101,27 +115,6 @@ export default function App() {
     );
   }
 
-  function ProfileScreen() {
-    const user = {
-      username: "woodwizard76",
-      createdDate: "June 27, 2023",
-      followers: 1,
-      following: 0,
-      timesSmoked: 8
-    };
-  
-  
-    return (
-      <View style={styles.screen}>
-        <Text>Username: {user.username}</Text>
-        <Text>Account Created: {user.createdDate}</Text>
-        <Text>Followers: {user.followers}</Text>
-        <Text>Following: {user.following}</Text>
-        <Text>Times Smoked: {user.timesSmoked}</Text>
-      </View>
-    );
-  }
-
   function ClanScreen() {
     return (
       <View style={styles.screen}>
@@ -135,11 +128,18 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Friends" component={Friends} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Account" options={{ headerShown: false }}>
+          {() => (
+            <Stack.Navigator>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Profile" component={Profile} options={{headerBackVisible: false}} />
+            </Stack.Navigator>
+          )}
+        </Tab.Screen>
         <Tab.Screen name="Map" options={{ headerShown: false }}>
           {() => (
             <Stack.Navigator>
-              <Stack.Screen name="MapScreen" component={MapScreen} />
+              <Stack.Screen name="MapScreen" component={MapScreen} options={{ headerShown: false }}/>
               <Stack.Screen name="Settings" component={Settings} />
             </Stack.Navigator>
           )}

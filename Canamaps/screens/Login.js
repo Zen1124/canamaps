@@ -2,16 +2,26 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { app } from "./firebase";
+import { app } from "../firebase";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 
-export default function Profile () {
+export default function Login ({navigation}) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loginError, setLoginError] = useState('')
     const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+     // User is signed in
+        navigation.navigate('Profile');
+    // ...
+    } else {
+    // No user is signed in. Go to login
+        console.log("no user signed in23")
+    }
 
     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
@@ -19,6 +29,7 @@ export default function Profile () {
                 // Signed in 
                 const user = userCredential.user;
                 console.log(user.email + " signed up.");
+                navigation.navigate('ProfileInfo');
                 // ...
             })
             .catch((error) => {
@@ -40,6 +51,7 @@ export default function Profile () {
                 // Signed in 
                 const user = userCredential.user;
                 console.log(user.email + " signed in.");
+                navigation.navigate('ProfileInfo');
                 // ...
             })
             .catch((error) => {
