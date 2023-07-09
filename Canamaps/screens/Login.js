@@ -12,16 +12,6 @@ export default function Login ({navigation}) {
     const [password, setPassword] = useState('')
     const [loginError, setLoginError] = useState('')
     const auth = getAuth();
-    const user = auth.currentUser;
-
-    if (user) {
-     // User is signed in
-        navigation.navigate('Profile');
-    // ...
-    } else {
-    // No user is signed in. Go to login
-        console.log("no user signed in23")
-    }
 
     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, email, password)
@@ -29,7 +19,7 @@ export default function Login ({navigation}) {
                 // Signed in 
                 const user = userCredential.user;
                 console.log(user.email + " signed up.");
-                navigation.navigate('ProfileInfo');
+                navigation.navigate('Profile');
                 // ...
             })
             .catch((error) => {
@@ -51,7 +41,7 @@ export default function Login ({navigation}) {
                 // Signed in 
                 const user = userCredential.user;
                 console.log(user.email + " signed in.");
-                navigation.navigate('ProfileInfo');
+                navigation.navigate('Profile');
                 // ...
             })
             .catch((error) => {

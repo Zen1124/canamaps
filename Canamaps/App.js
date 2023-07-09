@@ -8,6 +8,7 @@ import Profile from './screens/Profile';
 import Friends from './screens/Friends';
 import Settings from './screens/Settings';
 import Login from './screens/Login';
+import Setinfo from './screens/Setinfo'
 import { AntDesign } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
 import { getAuth } from "firebase/auth";
@@ -133,6 +134,7 @@ export default function App() {
             <Stack.Navigator>
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Profile" component={Profile} options={{headerBackVisible: false}} />
+              <Stack.Screen name="Change Info" component={Setinfo} />
             </Stack.Navigator>
           )}
         </Tab.Screen>

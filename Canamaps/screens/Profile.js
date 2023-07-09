@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { app } from "../firebase";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
+import { getAuth } from "firebase/auth";
 
 
 export default function Profile ({navigation}) {
@@ -28,6 +25,10 @@ export default function Profile ({navigation}) {
             <Text>Followers: {user.followers}</Text>
             <Text>Following: {user.following}</Text>
             <Text>Times Smoked: {user.timesSmoked}</Text>
+            <Button
+                onPress={() => {navigation.navigate('Change Info')}}
+                title='Change Account Info'
+            />
         </View>
 
     );
